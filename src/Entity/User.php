@@ -10,6 +10,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints\Date;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User
@@ -22,22 +25,31 @@ class User
 
     #[ORM\Column(length: 40)]
     #[Groups(["user:read"])]
+    #[NotBlank]
+    #[Regex("/^[a-zA-Z\u00C0-\u00FF]+$/")]
     private ?string $lastName = null;
 
     #[ORM\Column(length: 40)]
     #[Groups(["user:read"])]
+    #[NotBlank]
+    #[Regex("/^[a-zA-Z\u00C0-\u00FF]+$/")]
     private ?string $firstName = null;
 
     #[ORM\Column(length: 40)]
     #[Groups(["user:read"])]
+    #[NotBlank]
+    #[Email]
     private ?string $email = null;
 
     #[ORM\Column(length: 40)]
     #[Groups(["user:read"])]
+    #[NotBlank]
     private ?string $adress = null;
 
     #[ORM\Column(length: 40, nullable: true)]
     #[Groups(["user:read"])]
+    #[NotBlank]
+    #[Regex("/^[0-9]{10}$/")]
     private ?string $phoneNumber = null;
 
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Property::class, orphanRemoval: true)]
@@ -45,6 +57,8 @@ class User
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Groups(["user:read"])]
+    #[NotBlank]
+    #[Date]
     private ?\DateTimeInterface $birthDate = null;
 
     public function __construct()

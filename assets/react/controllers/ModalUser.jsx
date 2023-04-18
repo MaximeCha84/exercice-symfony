@@ -6,7 +6,7 @@ import "./css/modal.css";
 const ModalUser = ({ open, onClose }) => {
 	if (!open) return null;
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = async () => {
 		e.preventDefault();
 
 		const newUser = {};
@@ -50,6 +50,7 @@ const ModalUser = ({ open, onClose }) => {
 									id="lastName"
 									className="form-control"
 									maxLength="40"
+									pattern="^[a-zA-Z\u00C0-\u00FF]*$"
 									required
 								/>
 							</div>
@@ -62,6 +63,7 @@ const ModalUser = ({ open, onClose }) => {
 									id="firstName"
 									className="form-control"
 									maxLength="40"
+									pattern="^[a-zA-Z\u00C0-\u00FF]*$"
 									required
 								/>
 							</div>
@@ -119,13 +121,20 @@ const ModalUser = ({ open, onClose }) => {
 							id="phoneNumber"
 							className="form-control mb-2"
 							maxLength="40"
+							minLength={8}
+							pattern="^((\+)33|(\+)41|0)[1-9](\d{2}){4}$"
 							required
 						/>
 
 						<label htmlFor="birthDate" className="form-label">
 							Date de naissance
 						</label>
-						<input type="date" className="form-control mb-3" id="birthDate" />
+						<input
+							type="date"
+							className="form-control mb-3"
+							id="birthDate"
+							required
+						/>
 
 						<div className="row">
 							<button
